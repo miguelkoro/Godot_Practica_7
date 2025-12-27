@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=3 uid="uid://bs8k24rpcv5ny"]
+
+[ext_resource type="Script" uid="uid://c4811bjq0vw27" path="res://MinMaxSolver.gd" id="1_pae7u"]
+[ext_resource type="PackedScene" uid="uid://borknlrjk7vyv" path="res://button.tscn" id="1_rluax"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pae7u")
+
+[node name="HBoxContainer_0" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button_0_0" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_0" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_0_1" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_0" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_0_2" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_0" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_0_3" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_0" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="HBoxContainer_1" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button_1_0" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_1" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_1_1" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_1" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_1_2" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_1" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_1_3" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_1" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="HBoxContainer_2" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button_2_0" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_2" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_2_1" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_2" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_2_2" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_2" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_2_3" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_2" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="HBoxContainer_3" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button_3_0" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_3" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_3_1" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_3" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_3_2" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_3" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[node name="Button_3_3" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer_3" instance=ExtResource("1_rluax")]
+layout_mode = 2
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_0/Button_0_0" to="CanvasLayer/Control/VBoxContainer" method="_on_button_0_0_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_0/Button_0_1" to="CanvasLayer/Control/VBoxContainer" method="_on_button_0_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_0/Button_0_2" to="CanvasLayer/Control/VBoxContainer" method="_on_button_0_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_0/Button_0_3" to="CanvasLayer/Control/VBoxContainer" method="_on_button_0_3_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_1/Button_1_0" to="CanvasLayer/Control/VBoxContainer" method="_on_button_1_0_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_1/Button_1_1" to="CanvasLayer/Control/VBoxContainer" method="_on_button_1_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_1/Button_1_2" to="CanvasLayer/Control/VBoxContainer" method="_on_button_1_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_1/Button_1_3" to="CanvasLayer/Control/VBoxContainer" method="_on_button_1_3_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_2/Button_2_0" to="CanvasLayer/Control/VBoxContainer" method="_on_button_2_0_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_2/Button_2_1" to="CanvasLayer/Control/VBoxContainer" method="_on_button_2_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_2/Button_2_2" to="CanvasLayer/Control/VBoxContainer" method="_on_button_2_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_2/Button_2_3" to="CanvasLayer/Control/VBoxContainer" method="_on_button_2_3_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_3/Button_3_0" to="CanvasLayer/Control/VBoxContainer" method="_on_button_3_0_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_3/Button_3_1" to="CanvasLayer/Control/VBoxContainer" method="_on_button_3_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_3/Button_3_2" to="CanvasLayer/Control/VBoxContainer" method="_on_button_3_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer_3/Button_3_3" to="CanvasLayer/Control/VBoxContainer" method="_on_button_3_3_pressed"]
