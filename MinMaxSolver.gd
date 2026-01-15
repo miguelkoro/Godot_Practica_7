@@ -10,7 +10,12 @@ var gameOver: bool = false
 							[$HBoxContainer_2/Button_2_0, $HBoxContainer_2/Button_2_1, $HBoxContainer_2/Button_2_2, $HBoxContainer_2/Button_2_3],
 							[$HBoxContainer_3/Button_3_0, $HBoxContainer_3/Button_3_1, $HBoxContainer_3/Button_3_2, $HBoxContainer_3/Button_3_3]]
 							
-
+func get_lowest_empty_row(state: BoardState, col: int) -> int:
+	for row in range(HEIGHT - 1, -1, -1): # de abajo a arriba
+		if state.get_pos(row, col) == 0:
+			return row
+	return -1 # columna llena
+	
 #Funcion minmax con poda alfa, beta
 	#Alfa = -infi
 	#beta = +infi
@@ -25,55 +30,56 @@ func minimax(state: BoardState, depth: int, maximizing: bool, alpha: int, beta: 
 
 	if maximizing: #Nodo max, modioficamos el valor de alfa si es mayor 
 		var max_eval := -999
-		for i in range(HEIGHT):
-			for j in range(WIDTH):
-				if state.get_pos(i, j) != 0: #Si la posicion ya esta cogida por el jugador o la IA !=0, entonces no hacemos nada y pasamos a la siguiente posicion
-					continue
+		for col in range(WIDTH):
+			var row := get_lowest_empty_row(state, col)
+			if row == -1:
+				continue
 					
-				var child := BoardState.new() #Creamos un tablero auxiliar y ponemos la jugada de la IA en la poscion que toque
-				child.state = state.state.duplicate(true)
-				child.set_pos(i, j, 1)
-				
-				#llamamos de forma recursiva al minmax para evaluar las ramas de abajo, poniendole un -1 al depth para que la profundida no pase del maximo
-				#Le pasamos los valores alfa y beta, el tablero con el estado actual y como acabamos de maximizar, ahora minimizamos
-				var eval := minimax(child, depth - 1, false, alpha, beta) 
-				max_eval = max(max_eval, eval) #Se busca el mayor numero de entre -infi y eval (que eval será el max de todas las ramas inferiores)
-				alpha = max(alpha, eval) #Alfa será el maximo de entre el anterior alfa y el max devuelto en el min
-				
-				if beta <= alpha: #si alfa es  mayor o igual  a beta, no hace falta seguir evaulando las siguientes ramas
-					return max_eval #devolvemos el maximo al estar maximizando
+			var child := BoardState.new() #Creamos un tablero auxiliar y ponemos la jugada de la IA en la poscion que toque
+			child.state = state.state.duplicate(true)
+			child.set_pos(row, col, 1)
+			
+			#llamamos de forma recursiva al minmax para evaluar las ramas de abajo, poniendole un -1 al depth para que la profundida no pase del maximo
+			#Le pasamos los valores alfa y beta, el tablero con el estado actual y como acabamos de maximizar, ahora minimizamos
+			var eval := minimax(child, depth - 1, false, alpha, beta) 
+			max_eval = max(max_eval, eval) #Se busca el mayor numero de entre -infi y eval (que eval será el max de todas las ramas inferiores)
+			alpha = max(alpha, eval) #Alfa será el maximo de entre el anterior alfa y el max devuelto en el min
+			
+			if beta <= alpha: #si alfa es  mayor o igual  a beta, no hace falta seguir evaulando las siguientes ramas
+				return max_eval #devolvemos el maximo al estar maximizando
 
 		return max_eval
 	else: #Min modificamos el valor de bta si es menor
 		var min_eval := 999
-		for i in range(HEIGHT):
-			for j in range(WIDTH):
-				if state.get_pos(i, j) != 0:
-					continue
+		for col in range(WIDTH):
+			var row := get_lowest_empty_row(state, col)
+			if row == -1:
+				continue
 
-				var child := BoardState.new()
-				child.state = state.state.duplicate(true)
-				child.set_pos(i, j, -1) #Juega el jugador
+			var child := BoardState.new()
+			child.state = state.state.duplicate(true)
+			child.set_pos(row, col, -1) #Juega el jugador
 
-				var eval := minimax(child, depth - 1, true, alpha, beta)
-				min_eval = min(min_eval, eval) #Se busca el menor valor entre el devuelto en el max y +infi
-				beta = min(beta, eval) #Beta será el minimo entre el valor devuelto y el beta anterior
+			var eval := minimax(child, depth - 1, true, alpha, beta)
+			min_eval = min(min_eval, eval) #Se busca el menor valor entre el devuelto en el max y +infi
+			beta = min(beta, eval) #Beta será el minimo entre el valor devuelto y el beta anterior
 
-				if beta <= alpha: #Si alfa es mayor o igual a beta, podemos hacer prunning
-					return min_eval
+			if beta <= alpha: #Si alfa es mayor o igual a beta, podemos hacer prunning
+				return min_eval
 
 		return min_eval
 
 	
-func activate_button(x: int, y: int):
+func activate_button(x: int, col: int):
 	if gameOver:
 		return
 
-	if currentState.get_pos(x, y) != 0:
-		return
+	var row := get_lowest_empty_row(currentState, col) #Mira si la columna esta completa
+	if row == -1:
+		return # columna llena, no hace nada
 
 	# Turno jugador
-	currentState.set_pos(x, y, -1)
+	currentState.set_pos(row, col, -1) #Si no lo esta, se le pone el -1 del jugador
 	update_visuals()
 
 	var res := currentState.evaluate_win() #Evaluamos nuestra jugada, si sale -1, es que hemos ganado
@@ -112,20 +118,20 @@ func activate_button(x: int, y: int):
 func get_best_move(state: BoardState) -> BoardState:
 	var best_value := -999 #Simula el alfa,
 	var best_state: BoardState = null
-	for i in range(HEIGHT): #Recorremos la tabla
-		for j in range(WIDTH):
-			if state.get_pos(i, j) != 0: #Solo ponemos el 1 cuando la celda no este ocupada
-				continue
+	for col in range(WIDTH):
+		var row := get_lowest_empty_row(state, col)
+		if row == -1:
+			continue
 
-			var child := BoardState.new() #Creamos una tabla auxiliar y colocamos el 1
-			child.state = state.state.duplicate(true)
-			child.set_pos(i, j, 1)
+		var child := BoardState.new() #Creamos una tabla auxiliar y colocamos el 1
+		child.state = state.state.duplicate(true)
+		child.set_pos(row, col, 1)
 
-			var move_value := minimax(child, init_depth - 1, false, -999, 999)
+		var move_value := minimax(child, init_depth - 1, false, -999, 999)
 
-			if move_value > best_value or best_state == null: #Si el movimiento es mejor que los anteriores o no hay ningun movimiento asignado
-				best_value = move_value
-				best_state = child #Ponemos esa tabla auziliar como la que tiene mejor posicion
+		if move_value > best_value or best_state == null: #Si el movimiento es mejor que los anteriores o no hay ningun movimiento asignado
+			best_value = move_value
+			best_state = child #Ponemos esa tabla auziliar como la que tiene mejor posicion
 
 	return best_state
 
